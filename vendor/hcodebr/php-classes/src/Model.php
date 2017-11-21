@@ -14,6 +14,7 @@ class Model {
 			break;
 			case 'set':
 			$this->values[$fieldName] = $args[0];
+			break;
 		}
 	}
 
@@ -24,7 +25,7 @@ class Model {
 	}
 
 	public function getValues() {
-		return $this->$values;
+		return $this->values;
 	}
 }
 
