@@ -61,6 +61,35 @@ class User extends Model{
 		$sql = new Sql();
 		return $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) ORDER BY b.desperson");
 	}
+
+	public function get($iduser) {
+ 
+    $sql = new Sql(); 
+    $results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser", array(
+        ":iduser"=>$iduser
+    ));
+    $data = $results[0];
+    $data['desperson'] = utf8_encode($data['desperson']);
+    $this->setData($data);
+ 
+	}
+
+	public function save() {
+		$sql = new Sql();
+
+		$sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desmail, nrphone, :inadmin)", array(
+			$this->getdesperson(),
+			$this->getdeslogin(),
+			$this->getdespassword(),
+			$this->getdemail(),
+			$this->getnrphone(),
+			$this->getindamin()
+
+			$
+		));
+
+	}
+
 }
 
 ?>
