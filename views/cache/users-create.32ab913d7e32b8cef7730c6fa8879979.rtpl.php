@@ -33,10 +33,10 @@
               <label for="deslogin">Login</label>
               <input type="text" class="form-control" id="deslogin" name="deslogin" placeholder="Digite o login">
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="nrphone">Telefone</label>
               <input type="tel" class="form-control" id="nrphone" name="nrphone" placeholder="Digite o telefone">
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="desemail">E-mail</label>
               <input type="email" class="form-control" id="desemail" name="desemail" placeholder="Digite o e-mail">

@@ -75,18 +75,19 @@ class User extends Model{
 	}
 
 	public function save() {
+		
 		$sql = new Sql();
 
-		$sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desmail, nrphone, :inadmin)", array(
-			$this->getdesperson(),
-			$this->getdeslogin(),
-			$this->getdespassword(),
-			$this->getdemail(),
-			$this->getnrphone(),
-			$this->getindamin()
-
-			$
+		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, nrphone, :inadmin)", array(
+			":desperson"=>$this->getdesperson(),
+			":deslogin"=>$this->getdeslogin(),
+			":despassword"=>$this->getdespassword(),
+			":desemail"=>$this->getdesemail(),
+			":nrphone"=>$this->getnrphone(),
+			":inadmin"=>$this->getinadmin()
 		));
+
+		$this->setData($results[0]);
 
 	}
 
