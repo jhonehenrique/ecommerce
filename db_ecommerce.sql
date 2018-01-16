@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 15-Jan-2018 às 05:26
+-- Generation Time: 16-Jan-2018 às 05:03
 -- Versão do servidor: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -26,6 +26,26 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_categories_save` (`pidcategory` INT, `pdescategory` VARCHAR(64))  BEGIN
+	
+	IF pidcategory > 0 THEN
+		
+		UPDATE tb_categories
+        SET descategory = pdescategory
+        WHERE idcategory = pidcategory;
+        
+    ELSE
+		
+		INSERT INTO tb_categories (descategory) VALUES(pdescategory);
+        
+        SET pidcategory = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_categories WHERE idcategory = pidcategory;
+    
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_userspasswordsrecoveries_create` (`piduser` INT, `pdesip` VARCHAR(45))  BEGIN
 	
 	INSERT INTO tb_userspasswordsrecoveries (iduser, desip)
@@ -152,6 +172,17 @@ CREATE TABLE `tb_categories` (
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `tb_categories`
+--
+
+INSERT INTO `tb_categories` (`idcategory`, `descategory`, `dtregister`) VALUES
+(6, 'Android', '2018-01-16 01:59:11'),
+(7, 'Apple', '2018-01-16 01:59:19'),
+(10, 'Samsung', '2018-01-16 02:01:15'),
+(11, 'Motorola', '2018-01-16 03:47:25'),
+(12, 'Xbyte', '2018-01-16 04:02:25');
+
 -- --------------------------------------------------------
 
 --
@@ -209,7 +240,7 @@ CREATE TABLE `tb_persons` (
 
 INSERT INTO `tb_persons` (`idperson`, `desperson`, `desemail`, `nrphone`, `dtregister`) VALUES
 (1, 'JoÃ£o Rangel', 'admin@hcode.com.br', 2147483647, '2017-03-01 03:00:00'),
-(7, 'Suporte', 'biancagarciadossantos2014@gmail.com', 1112345678, '2017-03-15 16:10:27'),
+(7, 'Xbyte', 'biancagarciadossantos2014@gmail.com', 1112345678, '2017-03-15 16:10:27'),
 (10, 'Johnny', 'jhone.henrique@hotmail.com', 4430251271, '2018-01-15 01:49:40'),
 (13, 'jhone henrique', 'jhone.henrique.info@gmail.com', 97569218, '2018-01-15 04:23:09');
 
@@ -328,7 +359,8 @@ INSERT INTO `tb_userspasswordsrecoveries` (`idrecovery`, `iduser`, `desip`, `dtr
 (14, 10, '127.0.0.1', '2018-01-15 02:04:22', '2018-01-15 04:03:57'),
 (15, 10, '127.0.0.1', NULL, '2018-01-15 04:17:35'),
 (16, 13, '127.0.0.1', NULL, '2018-01-15 04:23:31'),
-(17, 13, '127.0.0.1', '2018-01-15 02:25:10', '2018-01-15 04:24:31');
+(17, 13, '127.0.0.1', '2018-01-15 02:25:10', '2018-01-15 04:24:31'),
+(18, 13, '127.0.0.1', NULL, '2018-01-15 04:30:12');
 
 --
 -- Indexes for dumped tables
@@ -438,7 +470,7 @@ ALTER TABLE `tb_cartsproducts`
 -- AUTO_INCREMENT for table `tb_categories`
 --
 ALTER TABLE `tb_categories`
-  MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_orders`
@@ -474,7 +506,7 @@ ALTER TABLE `tb_userslogs`
 -- AUTO_INCREMENT for table `tb_userspasswordsrecoveries`
 --
 ALTER TABLE `tb_userspasswordsrecoveries`
-  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
