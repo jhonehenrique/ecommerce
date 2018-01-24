@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 16-Jan-2018 às 05:03
+-- Generation Time: 24-Jan-2018 às 01:41
 -- Versão do servidor: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -43,6 +43,34 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_categories_save` (`pidcategory` 
     END IF;
     
     SELECT * FROM tb_categories WHERE idcategory = pidcategory;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_products_save` (`pidproduct` INT(11), `pdesproduct` VARCHAR(64), `pvlprice` DECIMAL(10,2), `pvlwidth` DECIMAL(10,2), `pvlheight` DECIMAL(10,2), `pvllength` DECIMAL(10,2), `pvlweight` DECIMAL(10,2), `pdesurl` VARCHAR(128))  BEGIN
+	
+	IF pidproduct > 0 THEN
+		
+		UPDATE tb_products
+        SET 
+			desproduct = pdesproduct,
+            vlprice = pvlprice,
+            vlwidth = pvlwidth,
+            vlheight = pvlheight,
+            vllength = pvllength,
+            vlweight = pvlweight,
+            desurl = pdesurl
+        WHERE idproduct = pidproduct;
+        
+    ELSE
+		
+		INSERT INTO tb_products (desproduct, vlprice, vlwidth, vlheight, vllength, vlweight, desurl) 
+        VALUES(pdesproduct, pvlprice, pvlwidth, pvlheight, pvllength, pvlweight, pdesurl);
+        
+        SET pidproduct = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * FROM tb_products WHERE idproduct = pidproduct;
     
 END$$
 
@@ -177,11 +205,9 @@ CREATE TABLE `tb_categories` (
 --
 
 INSERT INTO `tb_categories` (`idcategory`, `descategory`, `dtregister`) VALUES
-(6, 'Android', '2018-01-16 01:59:11'),
-(7, 'Apple', '2018-01-16 01:59:19'),
-(10, 'Samsung', '2018-01-16 02:01:15'),
-(11, 'Motorola', '2018-01-16 03:47:25'),
-(12, 'Xbyte', '2018-01-16 04:02:25');
+(2, 'Google', '2018-01-16 14:04:14'),
+(5, 'Android', '2018-01-16 14:05:39'),
+(7, 'Nova', '2018-01-23 15:08:05');
 
 -- --------------------------------------------------------
 
@@ -240,9 +266,10 @@ CREATE TABLE `tb_persons` (
 
 INSERT INTO `tb_persons` (`idperson`, `desperson`, `desemail`, `nrphone`, `dtregister`) VALUES
 (1, 'JoÃ£o Rangel', 'admin@hcode.com.br', 2147483647, '2017-03-01 03:00:00'),
-(7, 'Xbyte', 'biancagarciadossantos2014@gmail.com', 1112345678, '2017-03-15 16:10:27'),
+(7, 'Suporte', 'biancagarciadossantos2014@gmail.com', 1112345678, '2017-03-15 16:10:27'),
 (10, 'Johnny', 'jhone.henrique@hotmail.com', 4430251271, '2018-01-15 01:49:40'),
-(13, 'jhone henrique', 'jhone.henrique.info@gmail.com', 97569218, '2018-01-15 04:23:09');
+(13, 'jhone henrique', 'jhone.henrique.info@gmail.com', 97569218, '2018-01-15 04:23:09'),
+(14, 'teste', 'jhone.henrique@gmail.com', 4430251271, '2018-01-22 15:03:29');
 
 -- --------------------------------------------------------
 
@@ -267,6 +294,7 @@ CREATE TABLE `tb_products` (
 --
 
 INSERT INTO `tb_products` (`idproduct`, `desproduct`, `vlprice`, `vlwidth`, `vlheight`, `vllength`, `vlweight`, `desurl`, `dtregister`) VALUES
+(0, 'Ipad 32 GB Wi-Fi Tela 9,7\" CÃ¢mera 8MP Prata - Apple', '2499.00', '0.75', '16.95', '24.50', '0.47', 'ipad-32gb', '2018-01-23 15:26:09'),
 (1, 'Smartphone Android 7.0', '999.95', '75.00', '151.00', '80.00', '167.00', 'smartphone-android-7.0', '2017-03-13 03:00:00'),
 (2, 'SmartTV LED 4K', '3925.99', '917.00', '596.00', '288.00', '8600.00', 'smarttv-led-4k', '2017-03-13 03:00:00'),
 (3, 'Notebook 14\" 4GB 1TB', '1949.99', '345.00', '23.00', '30.00', '2000.00', 'notebook-14-4gb-1tb', '2017-03-13 03:00:00');
@@ -303,9 +331,10 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`iduser`, `idperson`, `deslogin`, `despassword`, `inadmin`, `dtregister`) VALUES
 (1, 1, 'admin', '$2y$12$YlooCyNvyTji8bPRcrfNfOKnVMmZA9ViM2A3IpFjmrpIbp5ovNmga', 1, '2017-03-13 03:00:00'),
-(7, 7, 'suporte', '$2y$12$HFjgUm/mk1RzTy4ZkJaZBe0Mc/BA2hQyoUckvm.lFa6TesjtNpiMe', 1, '2017-03-15 16:10:27'),
-(10, 10, 'jhowxk', '1234', 1, '2018-01-15 01:49:40'),
-(13, 13, 'jhone', '$2y$12$A3SRcanVFwVKXpWjoji3QeNsI501PwmeOCh82tB1cHD2W6.qoeGQe', 1, '2018-01-15 04:23:09');
+(7, 7, 'suporte', '$2y$12$HFjgUm/mk1RzTy4ZkJaZBe0Mc/BA2hQyoUckvm.lFa6TesjtNpiMe', 0, '2017-03-15 16:10:27'),
+(10, 10, 'jhowxk', '1234', 0, '2018-01-15 01:49:40'),
+(13, 13, 'jhone', '$2y$12$A3SRcanVFwVKXpWjoji3QeNsI501PwmeOCh82tB1cHD2W6.qoeGQe', 1, '2018-01-15 04:23:09'),
+(14, 14, 'teste', '1234', 0, '2018-01-22 15:03:30');
 
 -- --------------------------------------------------------
 
@@ -360,7 +389,7 @@ INSERT INTO `tb_userspasswordsrecoveries` (`idrecovery`, `iduser`, `desip`, `dtr
 (15, 10, '127.0.0.1', NULL, '2018-01-15 04:17:35'),
 (16, 13, '127.0.0.1', NULL, '2018-01-15 04:23:31'),
 (17, 13, '127.0.0.1', '2018-01-15 02:25:10', '2018-01-15 04:24:31'),
-(18, 13, '127.0.0.1', NULL, '2018-01-15 04:30:12');
+(18, 13, '127.0.0.1', NULL, '2018-01-15 12:08:16');
 
 --
 -- Indexes for dumped tables
@@ -470,7 +499,7 @@ ALTER TABLE `tb_cartsproducts`
 -- AUTO_INCREMENT for table `tb_categories`
 --
 ALTER TABLE `tb_categories`
-  MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tb_orders`
@@ -488,13 +517,13 @@ ALTER TABLE `tb_ordersstatus`
 -- AUTO_INCREMENT for table `tb_persons`
 --
 ALTER TABLE `tb_persons`
-  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_userslogs`
