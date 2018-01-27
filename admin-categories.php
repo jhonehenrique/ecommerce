@@ -2,6 +2,7 @@
 
 use \Hcode\PageAdmin;
 use \Hcode\Page;
+use \Hcode\Site;
 use \Hcode\Model\User;
 use \Hcode\Model\Category;
 
