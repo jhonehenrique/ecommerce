@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 24-Jan-2018 às 01:41
+-- Generation Time: 28-Jan-2018 às 17:32
 -- Versão do servidor: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -287,17 +287,23 @@ CREATE TABLE `tb_products` (
   `vlweight` decimal(10,2) NOT NULL,
   `desurl` varchar(128) NOT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `tb_products`
 --
 
 INSERT INTO `tb_products` (`idproduct`, `desproduct`, `vlprice`, `vlwidth`, `vlheight`, `vllength`, `vlweight`, `desurl`, `dtregister`) VALUES
-(0, 'Ipad 32 GB Wi-Fi Tela 9,7\" CÃ¢mera 8MP Prata - Apple', '2499.00', '0.75', '16.95', '24.50', '0.47', 'ipad-32gb', '2018-01-23 15:26:09'),
-(1, 'Smartphone Android 7.0', '999.95', '75.00', '151.00', '80.00', '167.00', 'smartphone-android-7.0', '2017-03-13 03:00:00'),
-(2, 'SmartTV LED 4K', '3925.99', '917.00', '596.00', '288.00', '8600.00', 'smarttv-led-4k', '2017-03-13 03:00:00'),
-(3, 'Notebook 14\" 4GB 1TB', '1949.99', '345.00', '23.00', '30.00', '2000.00', 'notebook-14-4gb-1tb', '2017-03-13 03:00:00');
+(1, 'jhone', '100.00', '100.00', '100.00', '100.00', '100.00', 'http://www.hcodecommerce.com.br/', '2018-01-25 15:17:36'),
+(2, 'henrique', '200.00', '200.00', '200.00', '200.00', '200.00', 'http://www.hcodecommerce.com.br/', '2018-01-25 15:17:52'),
+(3, 'erlich', '300.00', '300.00', '400.00', '500.00', '600.00', 'http://www.hcodecommerce.com.br/', '2018-01-25 15:18:18'),
+(11, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 21:58:47'),
+(12, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:00:23'),
+(14, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:01:37'),
+(16, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:02:48'),
+(17, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:03:48'),
+(21, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-27 02:04:34'),
+(22, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-27 02:05:29');
 
 -- --------------------------------------------------------
 
@@ -518,6 +524,12 @@ ALTER TABLE `tb_ordersstatus`
 --
 ALTER TABLE `tb_persons`
   MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `tb_products`
+--
+ALTER TABLE `tb_products`
+  MODIFY `idproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
