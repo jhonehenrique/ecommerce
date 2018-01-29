@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 28-Jan-2018 às 17:32
+-- Generation Time: 29-Jan-2018 às 03:53
 -- Versão do servidor: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -212,6 +212,24 @@ INSERT INTO `tb_categories` (`idcategory`, `descategory`, `dtregister`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tb_categoriesproducts`
+--
+
+CREATE TABLE `tb_categoriesproducts` (
+  `idcategory` int(11) NOT NULL,
+  `idproduct` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_categoriesproducts`
+--
+
+INSERT INTO `tb_categoriesproducts` (`idcategory`, `idproduct`) VALUES
+(5, 62);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `tb_orders`
 --
 
@@ -268,8 +286,7 @@ INSERT INTO `tb_persons` (`idperson`, `desperson`, `desemail`, `nrphone`, `dtreg
 (1, 'JoÃ£o Rangel', 'admin@hcode.com.br', 2147483647, '2017-03-01 03:00:00'),
 (7, 'Suporte', 'biancagarciadossantos2014@gmail.com', 1112345678, '2017-03-15 16:10:27'),
 (10, 'Johnny', 'jhone.henrique@hotmail.com', 4430251271, '2018-01-15 01:49:40'),
-(13, 'jhone henrique', 'jhone.henrique.info@gmail.com', 97569218, '2018-01-15 04:23:09'),
-(14, 'teste', 'jhone.henrique@gmail.com', 4430251271, '2018-01-22 15:03:29');
+(13, 'jhone henrique', 'jhone.henrique.info@gmail.com', 97569218, '2018-01-15 04:23:09');
 
 -- --------------------------------------------------------
 
@@ -294,16 +311,11 @@ CREATE TABLE `tb_products` (
 --
 
 INSERT INTO `tb_products` (`idproduct`, `desproduct`, `vlprice`, `vlwidth`, `vlheight`, `vllength`, `vlweight`, `desurl`, `dtregister`) VALUES
-(1, 'jhone', '100.00', '100.00', '100.00', '100.00', '100.00', 'http://www.hcodecommerce.com.br/', '2018-01-25 15:17:36'),
-(2, 'henrique', '200.00', '200.00', '200.00', '200.00', '200.00', 'http://www.hcodecommerce.com.br/', '2018-01-25 15:17:52'),
-(3, 'erlich', '300.00', '300.00', '400.00', '500.00', '600.00', 'http://www.hcodecommerce.com.br/', '2018-01-25 15:18:18'),
-(11, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 21:58:47'),
-(12, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:00:23'),
-(14, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:01:37'),
-(16, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:02:48'),
-(17, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-26 22:03:48'),
-(21, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-27 02:04:34'),
-(22, 'Bianca', '400.00', '400.00', '400.00', '400.00', '400.00', 'Garcia', '2018-01-27 02:05:29');
+(62, 'Smartphone Motorola Moto G5 Plus', '1135.23', '15.20', '7.40', '0.70', '0.16', 'smartphone-motorola-moto-g5-plus', '2018-01-28 19:57:14'),
+(63, 'Smartphone Samsung Galaxy J3 Dual', '679.90', '14.20', '7.10', '0.70', '0.14', 'smartphone-samsung-galaxy-j3', '2018-01-28 19:57:33'),
+(64, 'Smartphone Samsung Galaxy J5 Pro', '1299.00', '14.60', '7.10', '0.80', '0.16', 'smartphone-samsung-galaxy-j5', '2018-01-28 19:57:53'),
+(65, 'Smartphone Samsung Galaxy J7 Prime', '1149.00', '15.10', '7.50', '0.80', '0.16', 'smartphone-samsung-galaxy-j7', '2018-01-28 19:58:09'),
+(81, 'Smartphone Moto Z Play', '1887.78', '14.10', '0.90', '1.16', '0.13', 'smartphone-moto-z-play', '2018-01-29 01:21:04');
 
 -- --------------------------------------------------------
 
@@ -315,6 +327,14 @@ CREATE TABLE `tb_productscategories` (
   `idcategory` int(11) NOT NULL,
   `idproduct` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_productscategories`
+--
+
+INSERT INTO `tb_productscategories` (`idcategory`, `idproduct`) VALUES
+(5, 62),
+(7, 81);
 
 -- --------------------------------------------------------
 
@@ -339,8 +359,7 @@ INSERT INTO `tb_users` (`iduser`, `idperson`, `deslogin`, `despassword`, `inadmi
 (1, 1, 'admin', '$2y$12$YlooCyNvyTji8bPRcrfNfOKnVMmZA9ViM2A3IpFjmrpIbp5ovNmga', 1, '2017-03-13 03:00:00'),
 (7, 7, 'suporte', '$2y$12$HFjgUm/mk1RzTy4ZkJaZBe0Mc/BA2hQyoUckvm.lFa6TesjtNpiMe', 0, '2017-03-15 16:10:27'),
 (10, 10, 'jhowxk', '1234', 0, '2018-01-15 01:49:40'),
-(13, 13, 'jhone', '$2y$12$A3SRcanVFwVKXpWjoji3QeNsI501PwmeOCh82tB1cHD2W6.qoeGQe', 1, '2018-01-15 04:23:09'),
-(14, 14, 'teste', '1234', 0, '2018-01-22 15:03:30');
+(13, 13, 'jhone', '$2y$12$A3SRcanVFwVKXpWjoji3QeNsI501PwmeOCh82tB1cHD2W6.qoeGQe', 1, '2018-01-15 04:23:09');
 
 -- --------------------------------------------------------
 
@@ -429,6 +448,12 @@ ALTER TABLE `tb_cartsproducts`
 --
 ALTER TABLE `tb_categories`
   ADD PRIMARY KEY (`idcategory`);
+
+--
+-- Indexes for table `tb_categoriesproducts`
+--
+ALTER TABLE `tb_categoriesproducts`
+  ADD PRIMARY KEY (`idcategory`,`idproduct`);
 
 --
 -- Indexes for table `tb_orders`
@@ -523,19 +548,19 @@ ALTER TABLE `tb_ordersstatus`
 -- AUTO_INCREMENT for table `tb_persons`
 --
 ALTER TABLE `tb_persons`
-  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_products`
 --
 ALTER TABLE `tb_products`
-  MODIFY `idproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tb_userslogs`
