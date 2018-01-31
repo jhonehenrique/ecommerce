@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 29-Jan-2018 às 03:53
+-- Generation Time: 31-Jan-2018 às 03:55
 -- Versão do servidor: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -212,24 +212,6 @@ INSERT INTO `tb_categories` (`idcategory`, `descategory`, `dtregister`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_categoriesproducts`
---
-
-CREATE TABLE `tb_categoriesproducts` (
-  `idcategory` int(11) NOT NULL,
-  `idproduct` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `tb_categoriesproducts`
---
-
-INSERT INTO `tb_categoriesproducts` (`idcategory`, `idproduct`) VALUES
-(5, 62);
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `tb_orders`
 --
 
@@ -333,8 +315,11 @@ CREATE TABLE `tb_productscategories` (
 --
 
 INSERT INTO `tb_productscategories` (`idcategory`, `idproduct`) VALUES
-(5, 62),
-(7, 81);
+(2, 63),
+(2, 64),
+(5, 63),
+(7, 63),
+(7, 65);
 
 -- --------------------------------------------------------
 
@@ -450,12 +435,6 @@ ALTER TABLE `tb_categories`
   ADD PRIMARY KEY (`idcategory`);
 
 --
--- Indexes for table `tb_categoriesproducts`
---
-ALTER TABLE `tb_categoriesproducts`
-  ADD PRIMARY KEY (`idcategory`,`idproduct`);
-
---
 -- Indexes for table `tb_orders`
 --
 ALTER TABLE `tb_orders`
@@ -530,7 +509,7 @@ ALTER TABLE `tb_cartsproducts`
 -- AUTO_INCREMENT for table `tb_categories`
 --
 ALTER TABLE `tb_categories`
-  MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idcategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tb_orders`
