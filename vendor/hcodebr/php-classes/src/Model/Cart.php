@@ -77,6 +77,40 @@ class Cart extends Model{
 
 		$this->setData($results[0]);
 	}
+
+	public function addProduct(Product $product) {
+		$sql = new Sql();
+		$sql->query("INSERT INTO tb_cartsproducts (idcart. idproduct) VALUES(:idcart, :idproduct)", [
+			':idcart'=>$this->getidcart(),
+			':product'=>$this->$product->getidproduct()
+		]);
+	}
+
+	public function removeProduct(Product, $product, $all = false) {
+		$sql = new Sql();
+		if($all) {
+			$sql->query("UPDATE tb_cartsproducts SET dtremove = NOW() WHERE idcart = :idcart AND idproduct = :idproduct AND idproduct = :idproduct AND dtremove IS NULL", [
+				':idcart'=>$this->getidcart(),
+				':product'=>$this->$product->getidproduct()
+			]);
+		} else {
+			$sql->query("UPDATE tb_cartsproducts SET dtremove = NOW() WHERE idcart = :idcart AND idproduct = :idproduct AND dtremove IS NULL LIMIT 1", [
+				':idcart'=>$this->getidcart(),
+				':product'=>$this->$product->getidproduct()
+			]);
+		}
+	}
+
+	public function getProducts() {
+		$sql = new Sql();
+		return $sql->select("
+			SELECT * FROM tb_cartsproducts a 
+			INNER JOIN tb_products b ON a.idproducts = b.idproduct 
+			WHERE a.idcart = :idcart AND a.dtremove IS NULL 
+			GROUP BY b.idproduct, b.desproduct, b.vlprice, b.vlwidth, .b.vlheight, b.vllenght, b.vlweight 
+			ORDER BY b.desproduct
+		");
+	}
 }
 
 ?>
