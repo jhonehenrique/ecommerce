@@ -49,7 +49,10 @@ $app->get("/products/:desurl", function($desurl){
 $app->get("/cart", function(){
 	$cart = Cart::getFromSession();
   $page = new Page();
-	$page->setTpl("cart");
+	$page->setTpl("cart", [
+    'cart'=>$cart->getValues(),
+    'products'=>$cart->Products()
+  ]);
 });
 
 $app->get("/cart/:idproduct/add", function($idproduct) {
