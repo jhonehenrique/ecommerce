@@ -51,7 +51,7 @@ $app->get("/cart", function(){
   $page = new Page();
 	$page->setTpl("cart", [
     'cart'=>$cart->getValues(),
-    'products'=>$cart->Products()
+    'products'=>$cart->getProducts()
   ]);
 });
 
