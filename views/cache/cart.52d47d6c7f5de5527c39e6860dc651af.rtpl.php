@@ -38,6 +38,7 @@
                                 </thead>
                                 <tbody>
                                     <?php $counter1=-1;  if( isset($products) && ( is_array($products) || $products instanceof Traversable ) && sizeof($products) ) foreach( $products as $key1 => $value1 ){ $counter1++; ?>
+<<<<<<< HEAD
                                     <tr class="cart_item">
                                         <td class="product-remove">
                                             <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove">×</a> 
@@ -53,13 +54,35 @@
 
                                         <td class="product-price">
                                             <span class="amount">R$<?php echo formatPrice($value1["vlprice"]); ?></span>
+=======
+
+                                    <tr class="cart_item">
+                                        <td class="product-remove">
+                                            <a title="Remove this item" class="remove" href="/cart/<?php echo htmlspecialchars( $values["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/remove">×</a> 
+                                        </td>
+
+                                        <td class="product-thumbnail">
+                                            <a href="products/<?php echo htmlspecialchars( $value1["desurl"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="<?php echo htmlspecialchars( $value1["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"></a>
+                                        </td>
+
+                                        <td class="product-name">
+                                            <a href="products/<?php echo htmlspecialchars( $value1["desurl"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["desproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></a> 
+                                        </td>
+
+                                        <td class="product-price">
+                                            <span class="amount">R$<?php echo formatPrice($value1["vlprice"]); ?></span> 
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
                                         </td>
 
                                         <td class="product-quantity">
                                             <div class="quantity buttons_added">
                                                 <input type="button" class="minus" value="-" onclick="window.location.href = '/cart/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/minus'">
                                                 <input type="number" size="4" class="input-text qty text" title="Qty" value="<?php echo htmlspecialchars( $value1["nrqtd"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" min="0" step="1">
+<<<<<<< HEAD
                                                 <input type="button" class="plus" value="+" onclick="window.location.href = '/cart/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add'">
+=======
+                                                <input type="button" class="plus" value="+" onclick="window.location.href = 'cart/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/add'">
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
                                             </div>
                                         </td>
 
@@ -68,6 +91,10 @@
                                         </td>
                                     </tr>
                                     <?php } ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
                                 </tbody>
                             </table>
 

@@ -85,11 +85,18 @@ class Cart extends Model{
 		$sql->query("INSERT INTO tb_cartsproducts (idcart, idproduct) VALUES(:idcart, :idproduct)", [
 			':idcart'=>$this->getidcart(),
 			':idproduct'=>$product->getidproduct()
+<<<<<<< HEAD
 			]);
 	}
 
 
 	public function RemoveProduct(Product $product, $all = false) {
+=======
+		]);
+	}
+
+	public function removeProduct(Product $product, $all = false) {
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
 		$sql = new Sql();
 		if($all) {
 			$sql->query("UPDATE tb_cartsproducts SET dtremoved = NOW() WHERE idcart = :idcart AND idproduct = :idproduct", [
@@ -106,6 +113,7 @@ class Cart extends Model{
 
 	public function getProducts() {
 		$sql = new Sql();
+<<<<<<< HEAD
 		
 		// var_dump("SELECT * FROM db_ecommerce.tb_cartsproducts;
 		// 	SELECT b.idproduct, b.desproduct, b.vlprice, b.vlwidth, .b.vlheight, b.vllength, b.vlweight, b.desurl, COUNT(*) AS nrqtd, 
@@ -118,6 +126,11 @@ class Cart extends Model{
 		// exit();
 
 		$rows = $sql->select("
+=======
+	
+		$rows = $sql->select("
+			SELECT * FROM db_ecommerce.tb_cartsproducts;
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
 			SELECT b.idproduct, b.desproduct, b.vlprice, b.vlwidth, .b.vlheight, b.vllength, b.vlweight, b.desurl, COUNT(*) AS nrqtd, 
 			SUM(b.vlprice) AS vltotal
 			FROM tb_cartsproducts a 
@@ -125,6 +138,7 @@ class Cart extends Model{
 			WHERE a.idcart = :idcart AND a.dtremoved IS NULL 
 			GROUP BY b.idproduct, b.desproduct, b.vlprice, b.vlwidth, .b.vlheight, b.vllength, b.vlweight, b.desurl
 			ORDER BY b.desproduct
+<<<<<<< HEAD
 		",[
 		'idcart'=>$this->getidcart()
 		]);
@@ -148,6 +162,13 @@ class Cart extends Model{
 		}else {
 			return [];
 		}
+=======
+		", [
+			':idcart'=>$this->getcart()
+		]);
+
+		return Product::checkList($rows);
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
 	}
 
 	public function setFreight($nrzipcode) {

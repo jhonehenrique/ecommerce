@@ -48,12 +48,20 @@ $app->get("/products/:desurl", function($desurl){
 
 $app->get("/cart", function(){
 	$cart = Cart::getFromSession();
+<<<<<<< HEAD
   	$page = new Page();
 	$page->setTpl("cart",[
     'cart'=>$cart->getValues(),
     'products'=>$cart->getProducts(),
     'error'=>Cart::getMsgError()
     ]);
+=======
+  $page = new Page();
+	$page->setTpl("cart", [
+    'cart'=>$cart->getValues(),
+    'products'=>$cart->Products()
+  ]);
+>>>>>>> c76588469406ecae0ad224893ba9140b474f7695
 });
 
 $app->get("/cart/:idproduct/add", function($idproduct) {
