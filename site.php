@@ -41,6 +41,8 @@ $app->get("/products/:desurl", function($desurl){
 $app->get("/cart", function(){
 	$cart = Cart::getFromSession();
   	$page = new Page();
+  	// var_dump($cart->getValues());
+  	// exit();
 	$page->setTpl("cart",[
     'cart'=>$cart->getValues(),
     'products'=>$cart->getProducts(),
@@ -77,7 +79,7 @@ $app->get("/cart/:idproduct/remove", function($idproduct) {
 $app->post("/cart/freight", function() {
 	$cart = Cart::getFromSession();
 	$cart->setFreight($_POST['zipcode']);
-	header("Location: /cart");
+  header("Location: /cart");
   exit();
 });
 ?>
