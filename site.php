@@ -88,13 +88,32 @@ $app->post("/cart/freight", function() {
 });
 
 $app->get("/checkout", function(){
-	User::verifyLogin(false);
-	$cart = Cart::getFromSession();
-	$address = new Address();
-	$page = new Page();
-	$page->setTpl("checkout", [
-		'cart'=>$cart->getValues(),
-		'address'=>$address->getValues()
-	]);
+  User::verifyLogin(false);
+  $cart = Cart::getFromSession();
+  $address = new Address();
+  $page = new Page();
+  $page->setTpl("checkout", [
+    'cart'=>$cart->getValues(),
+    'address'=>$address->getValues()
+  ]);
 });
+
+$app->get("/login", function(){
+	$page = new Page();
+	$page->setTpl("login", [
+    'error'=>User::getError()
+    ]);
+});
+
+$app->post("/login", function() {
+  try{
+     User::login($_POST['login'], $_POST['password']);
+   }catch(Excption $e) {
+    User::setError($e->getMessage());
+   }
+  header("Location: /checkout");
+  exit();
+});
+
+
 ?>
