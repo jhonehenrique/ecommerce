@@ -70,9 +70,14 @@ class User extends Model{
 
 	public static function verifyLogin($inadmin = true) {
 		if (!User::checkLogin($inadmin)) {
-			header("Location: /admin/login");
+			if ($inadmin) {
+				header("Location: /admin/login");
+			} else {
+				header("Location: /login");
+			}
 			exit();
 		}
+		
 	}
 
 	public static function logout(){
