@@ -44,7 +44,7 @@ class User extends Model{
 	public static function login($login, $password) {
 		$sql = new Sql();
 
-		$results = $sql->select("SELECT * FROM tb_users WHERE deslogin =  :LOGIN", array(
+		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 			));
 		if (count($results) === 0) {
@@ -56,6 +56,7 @@ class User extends Model{
 		if (password_verify($password, $data["despassword"]) === true) {
 			
 			$user = new User();
+			$data['desperson'] = utf8_encode($data['desperson']);
 			$user->setData($data);
 			$_SESSION[User::SESSION] = $user->getValues();
 
@@ -64,7 +65,7 @@ class User extends Model{
 
 
 		}else{
-			throw new \Exeption("Usuario inexistente ou senha inválida.");
+			throw new \Exception("Usuario inexistente ou senha inválida.");
 		}
 
 	}
@@ -110,9 +111,9 @@ class User extends Model{
 
 
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
-			":desperson"=>$this->getdesperson(),
+			":desperson"=>utf8_decode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
-			":despassword"=>$this->getdespassword(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
 			":desemail"=>$this->getdesemail(),
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin()
@@ -128,7 +129,11 @@ class User extends Model{
 			":iduser"=>$iduser
 		));
 
-		$this->setData($results[0]);
+		$data = $results[0];
+		
+		$data['desperson'] = utf8_encode($data['desperson']);
+
+		$this->setData($data);
 	}
 
 	public function update() {
@@ -138,9 +143,9 @@ class User extends Model{
 
 		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			"iduser"=>$this->getiduser(),
-			":desperson"=>$this->getdesperson(),
+			":desperson"=>utf8_decode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
-			":despassword"=>$this->getdespassword(),
+			":despassword"=>User::getPasswordHash($this->getdespassword()),
 			":desemail"=>$this->getdesemail(),
 			":nrphone"=>$this->getnrphone(),
 			":inadmin"=>$this->getinadmin()
@@ -257,6 +262,12 @@ class User extends Model{
 	
 	public static function clearError() {
 		$_SESSION[User::ERROR] = NULL;
+	}
+
+	public static function getPasswordHash($password) {
+		return password_hash($password, PASSWORD_DEFAULT, [
+			'cost'=>12
+			]);
 	}
 
 }
