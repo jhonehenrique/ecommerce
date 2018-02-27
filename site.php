@@ -121,4 +121,6 @@ $app->get("/logout", function(){
   exit();
 });
 
+
+// teste
 ?>
