@@ -220,7 +220,6 @@ $app->get("/profile", function() {
     'profileMsg'=>User::getSuccess(),
     'profileError'=>User::getError()
   ]);
-<<<<<<< HEAD
 });
 
 $app->post("/profile", function() {
@@ -256,8 +255,6 @@ $app->post("/profile", function() {
 
 	header('Location: /profile');
 	exit();
-=======
->>>>>>> bea3b449b82d50c0c7b934c158ec7460688471ea
 });
 
 $app->post("/profile", function() {
