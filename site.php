@@ -124,6 +124,7 @@ $app->get("/logout", function(){
 });
 
 
+<<<<<<< HEAD
 $app->post("/register", function() {
 
 	$_SESSION['registerValues'] = $_POST;
@@ -259,4 +260,7 @@ $app->post("/profile", function() {
 	exit();
 });
 
+=======
+// teste
+>>>>>>> 6bc32019236b00c9f0745f56c58cd5cc6232b499
 ?>
