@@ -124,6 +124,7 @@ $app->get("/logout", function(){
 });
 
 
+
 $app->post("/register", function() {
 
 	$_SESSION['registerValues'] = $_POST;
@@ -219,6 +220,7 @@ $app->get("/profile", function() {
     'profileMsg'=>User::getSuccess(),
     'profileError'=>User::getError()
   ]);
+<<<<<<< HEAD
 });
 
 $app->post("/profile", function() {
@@ -254,6 +256,44 @@ $app->post("/profile", function() {
 
 	header('Location: /profile');
 	exit();
+=======
+>>>>>>> bea3b449b82d50c0c7b934c158ec7460688471ea
 });
 
+$app->post("/profile", function() {
+	User::verifyLogin(false);
+	if (!isset($_POST['desperson']) || $_POST['desperson'] === '') {
+		User::setError("Preencha seu nome.");
+		header('Location: /profile');
+		exit();
+	}
+	if (!isset($_POST['desemail']) || $_POST['desemail'] === '') {
+		User::setError("Preencha seu e-mail.");
+		header('Location: /profile');
+		exit();
+	}
+
+	$user = User::getFromSession();
+	if ($_POST['desemail'] !== $user->getdesemail()) {
+		if (User::checkLoginExist($_POST['desemail']) === true) {
+			User::setError("Endereço de e-mail já estpa cadastrado!");
+			header('Location: /profile');
+			exit();
+		}
+	}
+
+	$_POST['inadmin'] = $user->getinadmin();
+	$_POST['despassword'] = $user->getdespassword();
+	$_POST['deslogin'] = $_POST['desemail'];
+	$user->setData($_POST);
+
+	$user->update(false);
+	$_SESSION[user::SESSION] = $user->getValues();
+
+
+	User::setSuccess("Dados alterados com sucesso!");
+
+	header('Location: /profile');
+	exit();
+});
 ?>
