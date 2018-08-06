@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09-Mar-2018 às 22:11
+-- Generation Time: 06-Ago-2018 às 06:16
 -- Versão do servidor: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -99,6 +99,38 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_categories_save` (`pidcategory` 
     END IF;
     
     SELECT * FROM tb_categories WHERE idcategory = pidcategory;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_orders_save` (`pidorder` INT, `pidcart` INT(11), `piduser` INT(11), `pidstatus` INT(11), `pidaddress` INT(11), `pvltotal` DECIMAL(10,2))  BEGIN
+	
+	IF pidorder > 0 THEN
+		
+		UPDATE tb_orders
+        SET
+			idcart = pidcart,
+            iduser = piduser,
+            idstatus = pidstatus,
+            idaddress = pidaddress,
+            vltotal = pvltotal
+		WHERE idorder = pidorder;
+        
+    ELSE
+    
+		INSERT INTO tb_orders (idcart, iduser, idstatus, idaddress, vltotal)
+        VALUES(pidcart, piduser, pidstatus, pidaddress, pvltotal);
+		
+		SET pidorder = LAST_INSERT_ID();
+        
+    END IF;
+    
+    SELECT * 
+    FROM tb_orders a
+    INNER JOIN tb_ordersstatus b USING(idstatus)
+    INNER JOIN tb_carts c USING(idcart)
+    INNER JOIN tb_users d ON d.iduser = a.iduser
+    INNER JOIN tb_addresses e USING(idaddress)
+    WHERE idorder = pidorder;
     
 END$$
 
@@ -224,7 +256,37 @@ CREATE TABLE `tb_addresses` (
 INSERT INTO `tb_addresses` (`idaddress`, `idperson`, `desaddress`, `desnumber`, `descomplement`, `descity`, `desstate`, `descountry`, `deszipcode`, `desdistrict`, `dtregister`) VALUES
 (1, 48, 'Rua Joaquim Nabuco', '1234', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-09 15:47:20'),
 (2, 48, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-09 15:52:22'),
-(3, 48, 'Rua Universo', '900', '', 'MaringÃ¡', 'PR', 'Brasil', '87060420', 'Jardim Universo', '2018-03-09 15:52:56');
+(3, 48, 'Rua Universo', '900', '', 'MaringÃ¡', 'PR', 'Brasil', '87060420', 'Jardim Universo', '2018-03-09 15:52:56'),
+(4, 13, 'Rua Joaquim Nabuco', '123', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-12 16:13:13'),
+(5, 13, 'Rua Joaquim Nabuco', '123', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-12 16:14:26'),
+(6, 13, 'Rua Joaquim Nabuco', '896', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-12 16:15:25'),
+(7, 13, 'Rua Joaquim Nabuco', '562', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-12 16:43:13'),
+(8, 13, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-12 17:57:02'),
+(9, 13, 'Rua Joaquim Nabuco', '54545', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-12 17:59:38'),
+(10, 13, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-14 15:13:47'),
+(11, 13, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-14 15:54:38'),
+(12, 13, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-14 15:57:07'),
+(13, 13, 'Rua Joaquim Nabuco', '1331', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-14 15:58:34'),
+(14, 13, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-14 16:03:15'),
+(15, 13, 'Rua Joaquim Nabuco', '54545', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-03-14 16:04:10'),
+(16, 13, 'Rua Joaquim Nabuco', '1331', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-05-02 20:00:07'),
+(17, 13, 'Rua Joaquim Nabuco', '321', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-05-02 20:29:54'),
+(18, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 02:20:02'),
+(19, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 03:43:31'),
+(20, 49, 'Rua Joaquim Nabuco', '1331', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 03:47:14'),
+(21, 49, 'Rua Joaquim Nabuco', '132', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:01:53'),
+(22, 49, 'Rua Joaquim Nabuco', '2113', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:03:33'),
+(23, 49, 'Rua Joaquim Nabuco', '4545', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:05:19'),
+(24, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:13:20'),
+(25, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:15:22'),
+(26, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:15:45'),
+(27, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:16:09'),
+(28, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:28:40'),
+(29, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:34:43'),
+(30, 49, 'Rua Joaquim Nabuco', '65465', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:40:23'),
+(31, 49, 'Rua Joaquim Nabuco', '', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-02 04:55:13'),
+(32, 49, 'Rua Joaquim Nabuco', '4121', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-03 03:23:32'),
+(33, 49, 'Rua Joaquim Nabuco', '21', '', 'MaringÃ¡', 'PR', 'Brasil', '87014100', 'Zona 04', '2018-06-03 03:23:54');
 
 -- --------------------------------------------------------
 
@@ -275,12 +337,17 @@ INSERT INTO `tb_carts` (`idcart`, `dessessionid`, `iduser`, `deszipcode`, `vlfre
 (29, '9sitcoga4cp4sifkamlga0v6e6', 15, NULL, NULL, NULL, '2018-02-27 11:44:58'),
 (30, 'ka0g9o23uod1qstars8fpkr9b1', 1, NULL, NULL, NULL, '2018-02-27 16:31:05'),
 (31, '03c43002032ieh9sq05umbgbkp', 13, '87014100', '85.86', 1, '2018-03-02 15:20:56'),
-(32, 'ufpvlblpk0u6f3silc1189ibn6', NULL, NULL, NULL, NULL, '2018-03-05 22:02:02'),
+(32, 'ufpvlblpk0u6f3silc1189ibn6', NULL, '87014100', '65.05', 6, '2018-03-05 22:02:02'),
 (33, 'k5ma0ugithb00v4rdlnt090j9j', NULL, '87050190', '56.34', 1, '2018-03-05 22:03:06'),
 (34, 'j5epdcfeedr7f0745d93thhrib', NULL, '87060420', '141.81', 1, '2018-03-07 15:49:04'),
 (35, '7os1qgg9angs6r1dfnn16jsl4s', NULL, '87014100', '56.34', 1, '2018-03-07 16:46:59'),
-(36, '2omu1m8j7np4qafto634fag292', NULL, '87060420', '85.86', 1, '2018-03-09 15:05:25'),
-(37, '6nqg33h6i0mkum6d9ma9c2viu4', 14, '87060120', NULL, NULL, '2018-03-09 15:19:58');
+(36, '2omu1m8j7np4qafto634fag292', NULL, '87014100', '29.52', 1, '2018-03-09 15:05:25'),
+(37, '6nqg33h6i0mkum6d9ma9c2viu4', 14, '87060120', NULL, NULL, '2018-03-09 15:19:58'),
+(38, 'j4r4e0khh0h7u3q7ti8biltp1m', NULL, '87014100', '50.21', 6, '2018-03-14 15:58:01'),
+(39, 'e75ll9i6qlpnk3t6g8t19g02sf', NULL, '87014100', '29.52', 1, '2018-05-02 19:57:21'),
+(40, 'ed6iio9shhu8c1img140do87gj', NULL, '87014100', '29.52', 6, '2018-06-03 03:22:57'),
+(41, 'mj3ftc21399lbbddmo2156ssq3', 15, NULL, NULL, NULL, '2018-06-03 03:48:14'),
+(42, 'q0bu8bbpdal79a3cgbb8a76hfb', NULL, NULL, NULL, NULL, '2018-08-06 04:15:22');
 
 -- --------------------------------------------------------
 
@@ -391,8 +458,27 @@ INSERT INTO `tb_cartsproducts` (`idcartproduct`, `idcart`, `idproduct`, `dtremov
 (88, 34, 81, NULL, '2018-03-07 16:08:32'),
 (89, 34, 65, NULL, '2018-03-07 16:38:41'),
 (90, 35, 81, NULL, '2018-03-07 16:46:59'),
-(91, 36, 81, NULL, '2018-03-09 15:05:25'),
-(92, 36, 81, NULL, '2018-03-09 15:13:18');
+(91, 36, 81, '2018-03-12 09:12:35', '2018-03-09 15:05:25'),
+(92, 36, 81, '2018-03-12 09:12:35', '2018-03-09 15:13:18'),
+(93, 36, 81, '2018-03-12 09:12:35', '2018-03-12 02:23:55'),
+(94, 36, 63, '2018-03-12 09:12:27', '2018-03-12 02:24:22'),
+(95, 36, 84, '2018-03-14 12:56:54', '2018-03-12 12:12:14'),
+(96, 36, 84, '2018-03-14 12:56:54', '2018-03-12 12:13:37'),
+(97, 36, 64, '2018-03-12 09:15:05', '2018-03-12 12:14:50'),
+(98, 36, 84, '2018-03-14 12:56:54', '2018-03-12 12:15:11'),
+(99, 36, 84, '2018-03-14 12:56:54', '2018-03-12 12:17:54'),
+(100, 36, 62, '2018-03-12 09:18:17', '2018-03-12 12:18:07'),
+(101, 36, 84, '2018-03-14 12:56:54', '2018-03-12 12:18:30'),
+(102, 38, 84, NULL, '2018-03-14 15:58:12'),
+(103, 38, 64, NULL, '2018-03-14 16:03:09'),
+(104, 39, 84, NULL, '2018-05-02 19:57:21'),
+(105, 32, 84, '2018-06-02 00:46:44', '2018-06-02 02:19:25'),
+(106, 32, 84, '2018-06-02 01:01:22', '2018-06-02 03:46:27'),
+(107, 32, 84, NULL, '2018-06-02 04:01:06'),
+(108, 32, 84, NULL, '2018-06-02 04:03:13'),
+(109, 32, 62, NULL, '2018-06-02 04:54:48'),
+(110, 40, 84, NULL, '2018-06-03 03:23:06'),
+(111, 42, 84, NULL, '2018-08-06 04:15:22');
 
 -- --------------------------------------------------------
 
@@ -444,9 +530,38 @@ CREATE TABLE `tb_orders` (
   `idcart` int(11) NOT NULL,
   `iduser` int(11) NOT NULL,
   `idstatus` int(11) NOT NULL,
+  `idaddress` int(11) NOT NULL,
   `vltotal` decimal(10,2) NOT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_orders`
+--
+
+INSERT INTO `tb_orders` (`idorder`, `idcart`, `iduser`, `idstatus`, `idaddress`, `vltotal`, `dtregister`) VALUES
+(1, 36, 13, 1, 5, '29.52', '2018-03-12 16:14:26'),
+(2, 36, 13, 1, 6, '29.52', '2018-03-12 16:15:25'),
+(3, 36, 13, 1, 7, '29.52', '2018-03-12 16:43:13'),
+(4, 36, 13, 1, 8, '29.52', '2018-03-12 17:57:02'),
+(5, 36, 13, 1, 9, '29.52', '2018-03-12 17:59:38'),
+(6, 36, 13, 1, 10, '29.52', '2018-03-14 15:13:47'),
+(7, 36, 13, 1, 11, '29.52', '2018-03-14 15:54:38'),
+(8, 36, 13, 1, 12, '29.52', '2018-03-14 15:57:07'),
+(9, 38, 13, 1, 13, '29.52', '2018-03-14 15:58:34'),
+(10, 38, 13, 1, 14, '50.21', '2018-03-14 16:03:15'),
+(11, 38, 13, 1, 15, '50.21', '2018-03-14 16:04:10'),
+(12, 39, 13, 1, 16, '29.52', '2018-05-02 20:00:07'),
+(13, 39, 13, 1, 17, '29.52', '2018-05-02 20:29:54'),
+(14, 32, 15, 1, 18, '29.52', '2018-06-02 02:20:02'),
+(15, 32, 15, 1, 19, '29.52', '2018-06-02 03:43:31'),
+(16, 32, 15, 1, 20, '29.52', '2018-06-02 03:47:14'),
+(17, 32, 15, 1, 22, '31.02', '2018-06-02 04:03:33'),
+(18, 32, 15, 1, 29, '231.02', '2018-06-02 04:34:49'),
+(19, 32, 15, 1, 30, '231.02', '2018-06-02 04:40:27'),
+(20, 32, 15, 1, 31, '1400.28', '2018-06-02 04:55:18'),
+(21, 40, 15, 1, 32, '129.52', '2018-06-03 03:23:33'),
+(22, 40, 15, 1, 33, '129.52', '2018-06-03 03:23:55');
 
 -- --------------------------------------------------------
 
@@ -514,7 +629,8 @@ INSERT INTO `tb_persons` (`idperson`, `desperson`, `desemail`, `nrphone`, `dtreg
 (45, 'xbyte', 'jhone@xbyte.com.br', 4430251271, '2018-02-26 15:11:07'),
 (46, 'Oliver', 'jhone@oliverdigital.com.br', 4430251271, '2018-02-26 16:41:14'),
 (47, 'xxx', 'jhone.henrique@hotmail.com', 4499759218, '2018-02-27 11:51:39'),
-(48, 'Oliver Digital', 'jhone.henrique.info@gmail.com', 4430251271, '2018-03-05 21:14:12');
+(48, 'Oliver Digital', 'jhone.henrique.info@gmail.com', 4430251271, '2018-03-05 21:14:12'),
+(49, 'dev', 'jhone@oliverdigital.com.br', 4430251271, '2018-06-02 02:17:29');
 
 -- --------------------------------------------------------
 
@@ -543,7 +659,8 @@ INSERT INTO `tb_products` (`idproduct`, `desproduct`, `vlprice`, `vlwidth`, `vlh
 (63, 'Smartphone Samsung Galaxy J3 Dual', '679.90', '14.20', '7.10', '0.70', '0.14', 'smartphone-samsung-galaxy-j3', '2018-01-28 19:57:33'),
 (64, 'Smartphone Samsung Galaxy J5 Pro', '1299.00', '14.60', '7.10', '0.80', '0.16', 'smartphone-samsung-galaxy-j5', '2018-01-28 19:57:53'),
 (65, 'Smartphone Samsung Galaxy J7 Prime', '1149.00', '15.10', '7.50', '0.80', '0.16', 'smartphone-samsung-galaxy-j7', '2018-01-28 19:58:09'),
-(81, 'XSmartphone Moto Z Play', '1887.78', '14.10', '0.90', '1.16', '0.30', 'smartphone-moto-z-play', '2018-01-29 01:21:04');
+(81, 'XSmartphone Moto Z Play', '1887.78', '14.10', '0.90', '1.16', '0.30', 'smartphone-moto-z-play', '2018-01-29 01:21:04'),
+(84, 'DroneX Power', '100.00', '15.00', '15.00', '15.00', '0.15', 'dronex-power', '2018-03-12 12:11:36');
 
 -- --------------------------------------------------------
 
@@ -562,6 +679,7 @@ CREATE TABLE `tb_productscategories` (
 
 INSERT INTO `tb_productscategories` (`idcategory`, `idproduct`) VALUES
 (2, 62),
+(2, 84),
 (5, 62),
 (5, 65),
 (7, 62),
@@ -589,8 +707,9 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`iduser`, `idperson`, `deslogin`, `despassword`, `inadmin`, `dtregister`) VALUES
 (1, 1, 'admin', '$2y$12$rOUG9OxwscCH8Ym3ICUNCemEI8aUT2nKWaunbo2PmVxulVENGu9Ge', 1, '2017-03-13 03:00:00'),
-(13, 13, 'jhone.henrique.info@gmail.com', '$2y$12$a5j9KE0FNex3b4YlcW3F.eZ0r8UknlLySt7aYjzoWslPwBOZeYYzC', 1, '2018-01-15 04:23:09'),
-(14, 48, 'jhone@oliverdigital.com.br', '$2y$12$AEfdUV1MIXYHsNWg7x0S.uP3pLc/jYUAaNKw3gS.DCWJSmnNhUyqm', 0, '2018-03-05 21:14:12');
+(13, 13, 'jhone.henrique.info@gmail.com', '$2y$12$a5j9KE0FNex3b4YlcW3F.eZ0r8UknlLySt7aYjzoWslPwBOZeYYzC', 0, '2018-01-15 04:23:09'),
+(14, 48, 'jhone.henrique.info@gmail.com', '$2y$12$AEfdUV1MIXYHsNWg7x0S.uP3pLc/jYUAaNKw3gS.DCWJSmnNhUyqm', 0, '2018-03-05 21:14:12'),
+(15, 49, 'jhone@oliverdigital.com.br', '$2y$12$cPm/9ODVMBTC/xJWeTVgyeggWmanxnmCss59rY9GewDnHdX8DNVSy', 1, '2018-06-02 02:17:29');
 
 -- --------------------------------------------------------
 
@@ -660,7 +779,11 @@ INSERT INTO `tb_userspasswordsrecoveries` (`idrecovery`, `iduser`, `desip`, `dtr
 (30, 13, '127.0.0.1', '2018-02-28 13:40:42', '2018-02-28 16:39:32'),
 (31, 13, '127.0.0.1', NULL, '2018-03-01 15:14:45'),
 (32, 13, '127.0.0.1', NULL, '2018-03-01 15:18:03'),
-(33, 13, '127.0.0.1', '2018-03-01 12:19:40', '2018-03-01 15:19:24');
+(33, 13, '127.0.0.1', '2018-03-01 12:19:40', '2018-03-01 15:19:24'),
+(34, 13, '127.0.0.1', NULL, '2018-06-02 02:06:37'),
+(35, 13, '127.0.0.1', NULL, '2018-06-02 02:10:54'),
+(36, 13, '127.0.0.1', NULL, '2018-06-02 02:13:41'),
+(37, 13, '127.0.0.1', NULL, '2018-06-02 02:13:55');
 
 --
 -- Indexes for dumped tables
@@ -705,9 +828,10 @@ ALTER TABLE `tb_categoriesproducts`
 --
 ALTER TABLE `tb_orders`
   ADD PRIMARY KEY (`idorder`),
-  ADD KEY `FK_orders_carts_idx` (`idcart`),
   ADD KEY `FK_orders_users_idx` (`iduser`),
-  ADD KEY `fk_orders_ordersstatus_idx` (`idstatus`);
+  ADD KEY `fk_orders_ordersstatus_idx` (`idstatus`),
+  ADD KEY `fk_orders_carts_idx` (`idcart`),
+  ADD KEY `fk_orders_addresses_idx` (`idaddress`);
 
 --
 -- Indexes for table `tb_ordersstatus`
@@ -763,19 +887,19 @@ ALTER TABLE `tb_userspasswordsrecoveries`
 -- AUTO_INCREMENT for table `tb_addresses`
 --
 ALTER TABLE `tb_addresses`
-  MODIFY `idaddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idaddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `tb_carts`
 --
 ALTER TABLE `tb_carts`
-  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `idcart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `tb_cartsproducts`
 --
 ALTER TABLE `tb_cartsproducts`
-  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `idcartproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `tb_categories`
@@ -787,7 +911,7 @@ ALTER TABLE `tb_categories`
 -- AUTO_INCREMENT for table `tb_orders`
 --
 ALTER TABLE `tb_orders`
-  MODIFY `idorder` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idorder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tb_ordersstatus`
@@ -799,19 +923,19 @@ ALTER TABLE `tb_ordersstatus`
 -- AUTO_INCREMENT for table `tb_persons`
 --
 ALTER TABLE `tb_persons`
-  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `idperson` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `tb_products`
 --
 ALTER TABLE `tb_products`
-  MODIFY `idproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `idproduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_userslogs`
@@ -823,7 +947,7 @@ ALTER TABLE `tb_userslogs`
 -- AUTO_INCREMENT for table `tb_userspasswordsrecoveries`
 --
 ALTER TABLE `tb_userspasswordsrecoveries`
-  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `idrecovery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Constraints for dumped tables
@@ -852,6 +976,7 @@ ALTER TABLE `tb_cartsproducts`
 -- Limitadores para a tabela `tb_orders`
 --
 ALTER TABLE `tb_orders`
+  ADD CONSTRAINT `fk_orders_addresses` FOREIGN KEY (`idaddress`) REFERENCES `tb_addresses` (`idaddress`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_orders_carts` FOREIGN KEY (`idcart`) REFERENCES `tb_carts` (`idcart`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_orders_ordersstatus` FOREIGN KEY (`idstatus`) REFERENCES `tb_ordersstatus` (`idstatus`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_orders_users` FOREIGN KEY (`iduser`) REFERENCES `tb_users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION;

@@ -164,20 +164,18 @@ $app->post("/checkout", function(){
   $address->setData($_POST);
   $address->save();
   $cart = Cart::getFromSession();
-  $totals = $cart->getCalculaTotal();
+  $cart->getCalculateTotal();
   $order = new Order();
   $order->setData([
     'idcart'=>$cart->getidcart(),
     'idaddress'=>$address->getidaddress(),
     'iduser'=>$user->getiduser(),
     'idstatus'=>OrderStatus::EM_ABERTO,
-    'vltotal'=>$totals['vlprice'] + $cart->getvlfreight()
+    'vltotal'=>$cart->getvltotal()
   ]);
-
   $order->save();
   header("Location: /order/".$order->getidorder()); 
   exit();
-
 });
 
 $app->get("/login", function(){
@@ -435,18 +433,34 @@ $app->get("/profile/orders", function(){
 });
 
 
-$app->get("/profile/orders/:idorder", function($idorder){
+// $app->get("/profile/orders/:idorder", function($idorder){
+// 	User::verifyLogin(false);
+
+// 	$order = new Order();
+// 	$order->get((int)$idorder);
+// 	$cart = new Cart();
+// 	$cart = get((int)$order->getidcart());
+// 	$cart->getCalculateTotal();
+// 	$page = new Page();
+
+// 	$page->setTpl("profile-orders-detail", [
+// 		'order'=>$order->getValues(),
+// 		'cart'=>$cart->getValues()
+// 	]);
+// });
+$app->get("/profile/orders/:idorder",function($idorder){
 	User::verifyLogin(false);
-
-	$order = new Order();
-
+	$order = new order();
 	$order->get((int)$idorder);
-
+	$cart = new Cart();
+	$cart->get((int)$order->getidcart());
+	$cart->getCalculateTotal();
 	$page = new Page();
-
-	$page->setTpl("profile-orders", [
-		'order'=>$order->getValues()
+	$page->setTpl("profile-orders-detail",[
+		'order'=>$order->getValues(),
+		'cart'=>$cart->getValues(),
+		'products'=>$cart->getProducts()
+		
 	]);
 });
-
 ?>

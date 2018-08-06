@@ -1,4 +1,3 @@
-
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -35,6 +34,17 @@
                         </tr>
                     </thead>
                     <tbody>
+                         {loop="$products"}
+                            <tr class="cart_item">
+                                <td class="product-name">
+                                    {$value.desproduct} <strong class="product-quantity">× {$value.nrqtd}</strong> 
+                                </td>
+                                <td class="product-total">
+                                    <span class="amount">R${$value.vltotal}</span>
+                                </td>
+                            </tr>
+                            {/loop}
+
                         {loop="$orders"}
                         <tr>
                             <th scope="row">{$value.idorder}</th>
